@@ -1,38 +1,92 @@
+body {
+    background-image: url("img/background.jpg");
+    background-size: 100%;
+    background-repeat: repeat-y;
+    margin: 0;
+    padding: 0;
+}
+
 .App {
-  text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* MenuBar Style */
+
+.menuBar {
+    display: flex;
+    position: fixed;
+    justify-content: flex-start;
+    backdrop-filter: blur(5px);
+    margin-top: 2%;
+    border-radius: 3px;
+    width: 90%;
+    background-color: rgba(128, 128, 128, 0.4);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.menuBar a {
+    transition: all .3s;
+    text-decoration: none;
+    font-size: 1vw;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.menuBar a:not(.menuBar a:first-child) {
+    padding: 1%;
+    color: black;
 }
 
-.App-link {
-  color: #61dafb;
+.menuBar a:hover {
+    box-shadow: 0 0 15px rgb(128, 128, 128);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.menuBar a:first-child {
+    padding: 1% 2% 1% 2%;
+    color: white;
+    border-radius: 3px;
+    background-color: cadetblue;
+}
+
+.menuBar .selected {
+    background-color: rgba(90, 90, 90, 0.4);
+}
+
+/* MainContent Style */
+
+.mainContent {
+    display: flex;
+    justify-content: center;
+    margin-top: 7%;
+    width: 100%;
+}
+
+/* MainContent: nul */
+
+.nulIntro {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    backdrop-filter: blur(5px);
+    background-color: rgba(128, 128, 128, 0.4);
+    padding: 1%;
+    border-radius: 5px;
+    width: 50%;
+}
+
+.nulIntroImg img {
+    border-radius: 5px;
+    width: 20vw;
+    max-width: 1000px;
+}
+
+.nulIntroDescription {
+    margin-left: 3%;
+    width: 100%;
+}
+
+.nulIntroDescription header {
+    font-size: 2vw;
+}
+
+.nulIntroDescription span {
+    margin-left: 0.3%;
 }
