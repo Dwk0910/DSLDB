@@ -13,7 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 // Local Import
-import IntroImg from './img/IntroImg.jpg';
+import nulIntroImg from './img/IntroImg.jpg';
 
 function MenuBar(props) {
     const [ queryParams ] = useSearchParams();
@@ -40,15 +40,22 @@ function MainContent() {
     switch (selectedPage) {
         case null:
             result = (
-                <div className={"nulIntro"}>
-                    <div className={"nulIntroImg"}>
-                        <img src={IntroImg} alt={"IntroImg"}/>
-                    </div>
-                    <div className={"nulIntroDescription"}>
-                        <header>DSLDB란?</header>
-                        <span>
-                            DSLDB 설명란
-                        </span>
+                <div className={"nul"}>
+                    <div className={"nulIntro"}>
+                        <div className={"nulIntroImg"}>
+                            <img src={nulIntroImg} alt={"IntroImg"}/>
+                        </div>
+                        <div className={"nulIntroDescription"}>
+                            <header>DSLDB란?</header>
+                            <span>
+                                DSLDB에 오신 유저여러분을 환영합니다!<br/>
+                                DSLDB는 2023년 9월부터 개발을 시작하여<br/>
+                                2024년을 맞춰 공개된 차세대 정보열람용 웹사이트입니다.<br/><br/>
+                                DSL유저 모두 언제든지 이용 가능하며<br/>
+                                서로간의 깨끗한 인터넷 사용문화를<br/>
+                                유지시켜가며 이용을 부탁드립니다!
+                            </span>
+                        </div>
                     </div>
                 </div>
             );
@@ -95,9 +102,19 @@ function App() {
                     target: "inf"
                 }
             ]}/>
-            <div className={"mainContent"}>
-                <MainContent/>
+            <div className={"ContentWrap"}>
+                <div className={"mainContent"}>
+                    <MainContent/>
+                </div>
             </div>
+            <footer>
+                <header>
+                    Copyright 2023. DSL Official Server All rights reserved.
+                </header>
+                <span>
+                    이 사이트는 DSL서버법을 따르고 있습니다.
+                </span>
+            </footer>
         </div>
     );
 }
