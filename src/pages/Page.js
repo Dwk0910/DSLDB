@@ -181,6 +181,7 @@ export function Browse() {
     const queryString = queryParams.get('qry');
 
     if (selectedMode === 'search') {
+        if (queryString === '') window.location.replace("?pid=bws");
         // TODO: 검색기능 구현
     }
 
