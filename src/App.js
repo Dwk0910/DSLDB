@@ -41,11 +41,12 @@ function MenuBar(props) {
         lis.push(<span key={"idspan"} style={{position: "absolute", right: "11%", fontSize: "1vw", padding: "1% 2% 1% 2%", borderRight: "1px solid black"}}>{localStorage.getItem('id')}</span>);
         lis.push(<span key={"loginbtn"} onClick={() => {
             Swal.fire({
+                toast: true,
                 title: '정말 로그아웃 하시겠습니까?',
                 icon: 'question',
                 confirmButtonText: '확인',
                 cancelButtonText: '취소',
-                showCancelButton: true
+                showCancelButton: true,
             }).then((e) => {
                 if (e.isConfirmed) {
                     window.location.replace("?pid=logout");
