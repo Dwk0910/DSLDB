@@ -33,7 +33,8 @@ body {
 .menuBar a {
     transition: all .3s;
     text-decoration: none;
-    font-size: 1vw;
+    font-size: 0.9vw;
+    cursor: pointer;
 }
 
 .menuBar a:not(.menuBar a:first-child) {
@@ -56,6 +57,18 @@ body {
     background-color: rgba(90, 90, 90, 0.4);
 }
 
+#logoutButton {
+    transition: all .3s;
+    padding: 1%;
+    color: black;
+    font-size: 0.9vw;
+    cursor: pointer;
+}
+
+#logoutButton:hover {
+    box-shadow: 0 0 15px rgb(128, 128, 128);
+}
+
 /* ContentWrap Style */
 .ContentWrap {
     width: 100%;
@@ -76,6 +89,60 @@ body {
 @keyframes MainContentAnimation {
     from { opacity: 0; }
     to { opacity: 100%; }
+}
+
+.Login {
+    margin-top: 3%;
+    backdrop-filter: blur(2px);
+    background-color: rgba(128, 128, 128, 0.4);
+    width: 50%;
+    padding-top: 10%;
+    padding-bottom: 10%;
+}
+
+.Login span {
+    margin-top: -10%;
+}
+
+.LoginForm {
+    margin-top: 5%;
+    width: 100%;
+}
+
+.Login, .LoginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.LoginForm input {
+    margin-top: 1%;
+    border: 0;
+    border-radius: 5px;
+}
+
+.LoginForm input[type="text"], .LoginForm input[type="password"] {
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
+    padding-left: 1%;
+    width: 40%;
+}
+
+.LoginForm input[type="submit"] {
+    transition: all .3s;
+    cursor: pointer;
+    background-color: rgba(81,137,123,0.86);
+    color: white;
+    width: 41.2%;
+    margin-top: 5%;
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
+}
+
+.LoginForm input[type="submit"]:hover {
+    background-color: rgba(129,193,178,0.86);
+    color: black;
+    box-shadow: 0 0 15px rgb(128, 128, 128);
 }
 
 /* MainContent: nul */
@@ -167,6 +234,96 @@ body {
     margin-bottom: 1%;
 }
 
+/* MainContent: browse */
+
+.contentAdd {
+    transition: all .3s;
+    position: absolute;
+    right: 0;
+    margin-right: 10%;
+    margin-top: -2.5%;
+    border-radius: 5px;
+    font-size: 1vw;
+    background-color: rgba(93, 138, 217, 0.4);
+    padding: 1%;
+    cursor: pointer
+}
+
+.contentAdd:hover {
+    box-shadow: 0 0 15px rgb(128, 128, 128);
+}
+
+.browse {
+    width: 100%;
+}
+
+.browse form {
+    margin-left: 9.7%;
+}
+
+.browse form input {
+    padding: 0.5%;
+}
+
+.browse form input[type="submit"] {
+    transition: all .3s;
+    margin-left: 1%;
+    width: 5%;
+    background-color: #5F92A0;
+    border: 1px solid #5F92A0;
+    border-radius: 3px;
+    cursor: pointer;
+    color: white;
+}
+
+.browse form input[type="submit"]:hover {
+    box-shadow: 0 0 15px rgb(128, 128, 128);
+}
+
+.browse form input[type="text"] {
+    width: 19.8%;
+}
+
+.browseContentParent {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: 4%;
+}
+
+.browseContent {
+    display: flex;
+    width: 90%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.browseContainer {
+    transition: all .3s;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: rgba(128, 128, 128, 0.4);
+    margin-left: 1%;
+    padding: 1%;
+    width: 20%;
+    margin-top: 3%;
+}
+
+.browseContainer header {
+    font-size: 2vw;
+    font-weight: bold;
+    margin-bottom: 5%;
+}
+
+.browseContainer span {
+    font-size: 1.2vw;
+    display: block;
+}
+
+.browseContainer:hover {
+    box-shadow: 0 0 15px rgb(128, 128, 128);
+}
+
 /* Final Style */
 
 footer {
@@ -178,16 +335,17 @@ footer {
     width: 100%;
 }
 
-footer header {
-    padding-left: 5%;
-    padding-top: 1%;
-    padding-bottom: 1%;
+footer header, footer span {
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
     font-size: 1vw;
 }
 
+footer header {
+    padding-left: 5%;
+}
+
 footer span {
-    padding-top: 1%;
-    padding-bottom: 1%;
     margin-left: 55%;
     text-shadow: 0 0 5px rgb(50, 90, 20);
     font-size: 1vw;
