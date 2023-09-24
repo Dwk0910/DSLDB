@@ -2,7 +2,9 @@ import Swal from "sweetalert2";
 import { useSearchParams } from "react-router-dom";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faArrowLeft, faPencil, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+
+import MDEditor from '@uiw/react-md-editor';
 
 // Local Import
 import userList from "../save/userlist.json";
@@ -180,43 +182,125 @@ export function Browse() {
     const selectedMode = queryParams.get('mode');
     const queryString = queryParams.get('qry');
 
-    if (selectedMode === 'search') {
-        if (queryString === '') window.location.replace("?pid=bws");
-        // TODO: 검색기능 구현
+    let SortedContentList = contentList.toSorted((a, b) => new Date(a.date) - new Date (b.date)).reverse();
+
+    let SliceString = (targetStr, mch) => {
+        if (targetStr.length <= mch) {
+            return (targetStr);
+        }
+
+        return(targetStr.substring(0, mch) + "...");
+    }
+
+    let GetIndex = (targetName, targetOwner, TargetDate, targetContent) => {
+        for (let i in contentList) {
+            if (contentList[i].name === targetName && contentList[i].owner === targetOwner && contentList[i].date === TargetDate && contentList[i].content === targetContent) {
+                return i;
+            }
+        }
+        console.log("ERROR");
+        return null;
     }
 
     let browseContent = [];
 
-    for (let i in contentList) {
-        browseContent.push(
-          <div className={"browseContainer"} key={i} onClick={() => {window.location.replace(`?pid=ViewContent&idx=${i + 1}`)}}>
-              <header>{ contentList[i].name }</header>
-              <span>{ contentList[i].owner }</span>
-              <span>{ contentList[i].date }</span>
-          </div>
-        );
+    if (selectedMode === 'search') {
+        if (queryString === '') window.location.replace("?pid=bws");
+
+        const q = queryString.toLowerCase();
+        let containList = [];
+
+        for (let i in SortedContentList) {
+            let target = SortedContentList[i].name.toLowerCase();
+            if (target.includes(q)) containList.push(GetIndex(SortedContentList[i].name, SortedContentList[i].owner, SortedContentList[i].date, SortedContentList[i].content));
+        }
+
+        for (let i in containList) {
+            let index = parseInt(GetIndex(SortedContentList[i].name, SortedContentList[i].owner, SortedContentList[i].date, SortedContentList[i].content));
+
+            browseContent.push(
+                <div className={"browseContainer"} key={i} onClick={() => {
+                    window.location.replace(`?pid=ViewContent&idx=${index + 1}`)
+                }}>
+                    <header>{SliceString(contentList[containList[i]].name, 17)}</header>
+                    <span>{contentList[containList[i]].owner}</span>
+                    <span>{contentList[containList[i]].date}</span>
+                </div>
+            );
+        }
+    } else {
+        for (let i in SortedContentList) {
+            let index = parseInt(GetIndex(SortedContentList[i].name, SortedContentList[i].owner, SortedContentList[i].date, SortedContentList[i].content));
+
+            browseContent.push(
+                <div className={"browseContainer"} key={i} onClick={() => {
+                    window.location.replace(`?pid=ViewContent&idx=${index + 1}`)
+                }}>
+                    <header>{SliceString(SortedContentList[i].name, 17)}</header>
+                    <span>{SortedContentList[i].owner}</span>
+                    <span>{SortedContentList[i].date}</span>
+                </div>
+            );
+        }
     }
 
     let plusContent = () => {
-      if (typeof localStorage.getItem('id') === 'string') {
-          return(<span className={"contentAdd"}><FontAwesomeIcon icon={faPlusCircle}/> 글 쓰기</span>);
-      }
+        if (typeof localStorage.getItem('id') === 'string') {
+            return (<span className={"contentAdd"}><FontAwesomeIcon icon={faPlusCircle}/> 글 쓰기</span>);
+        }
     };
 
     return (
-      <div className={"browse"}>
-          <form>
-              <input type={"hidden"} name={"pid"} value={"bws"}/>
-              <input type={"hidden"} name={"mode"} value={"search"}/>
-              <input type={"text"} name={"qry"} placeholder={"검색어 입력"} defaultValue={queryString}/>
-              <input type={"submit"} value={"검색"}/>
-          </form>
-          {plusContent()}
-          <div className={"browseContentParent"}>
-              <div className={"browseContent"}>
-                  { browseContent }
-              </div>
-          </div>
-      </div>
+        <div className={"browse"}>
+            <form>
+                <input type={"hidden"} name={"pid"} value={"bws"}/>
+                <input type={"hidden"} name={"mode"} value={"search"}/>
+                <input type={"text"} name={"qry"} placeholder={"검색어 입력"} defaultValue={queryString}/>
+                <input type={"submit"} value={"검색"}/>
+            </form>
+            {plusContent()}
+            <div className={"browseContentParent"}>
+                <div className={"browseContent"}>
+                    {browseContent}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export function ViewContent() {
+    const [ queryParams ] = useSearchParams();
+    const index = parseInt(queryParams.get('idx')) - 1;
+
+    let titleArr = [];
+    if (localStorage.getItem('id') === contentList[index].owner) {
+        titleArr.push(<a href={`?pid=EditContent&idx=${index + 1}`}><FontAwesomeIcon icon={faPencil}/></a>);
+        titleArr.push(<a href={`?pid=DeleteContent&idx=${index + 1}`}><FontAwesomeIcon icon={faTrashCan}/></a>);
+    }
+
+    return (
+        <div className={"ViewContent"}>
+            <div className={"ViewContentTitle"}>
+                <a style={{marginLeft: "9%"}} href={"?pid=bws"}><FontAwesomeIcon icon={faArrowLeft}/> 돌아가기</a>
+                {titleArr}
+                <span>{contentList[index].name}</span>
+                <div style={{display: "flex", flexDirection: "column"}}>
+                    <div><span>작성일 : </span><span>{contentList[index].date}</span></div>
+                    <div><span>작성자 : </span><span>{contentList[index].owner}</span></div>
+                </div>
+            </div>
+            <div className={"ViewContentDetail"} data-color-mode={"light"}>
+                <MDEditor.Markdown source={contentList[index].content} style={{
+                    backgroundColor: "transparent",
+                    width: "80%",
+                    marginLeft: "9%",
+                    marginTop: "1%",
+                    marginBottom: "2%",
+                    padding: "2%",
+                    borderRadius: "5px",
+                    backdropFilter: "blur(5px)"
+                }}/>
+            </div>
+        </div>
     );
 }

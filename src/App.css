@@ -289,6 +289,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     margin-left: 4%;
+    margin-right: 4%;
 }
 
 .browseContent {
@@ -305,7 +306,7 @@ body {
     background-color: rgba(128, 128, 128, 0.4);
     margin-left: 1%;
     padding: 1%;
-    width: 20%;
+    width: 30%;
     margin-top: 3%;
 }
 
@@ -322,6 +323,60 @@ body {
 
 .browseContainer:hover {
     box-shadow: 0 0 15px rgb(128, 128, 128);
+}
+
+/* ViewContent Style */
+
+.ViewContent {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.ViewContentTitle {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.ViewContentTitle header {
+    font-size: 2vw;
+    font-weight: bold;
+}
+
+.ViewContentTitle span:not(.ViewContentTitle > span) {
+    font-size: 1.2vw;
+}
+
+.ViewContentTitle > span {
+    font-size: 2vw;
+    font-weight: bold;
+    margin-left: 5%;
+    margin-top: 0.4%;
+    width: 50%;
+}
+
+.ViewContentTitle a {
+    transition: all .3s;
+    text-decoration: none;
+    margin-left: 1%;
+    color: black;
+    border-radius: 3px;
+    background-color: rgba(128, 128, 128, 0.4);
+    padding: 1%;
+    margin-bottom: 1%;
+    font-size: 1vw;
+    cursor: pointer;
+}
+
+.ViewContentTitle a:hover {
+    box-shadow: 0 0 10px rgb(128, 128, 128);
+}
+
+.ViewContentDetail {
+    width: 100%;
+    height: 100%;
 }
 
 /* Final Style */

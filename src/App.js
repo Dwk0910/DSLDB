@@ -22,7 +22,8 @@ import {
     ReqLogin,
     Logout,
     Nul,
-    Browse
+    Browse,
+    ViewContent
 } from './pages/Page';
 
 function MenuBar(props) {
@@ -71,25 +72,12 @@ function MainContent() {
         case null:
             result = <Nul/>;
         break;
-        case "login":
-            result = <LoginForm/>
-        break;
-
-        case "ReqLogin":
-            result = <ReqLogin/>
-        break;
-
-        case "logout":
-            result = <Logout/>
-        break;
-
-        case "bws":
-            result = <Browse/>
-        break;
-
-        default:
-            console.log(404);
-        break;
+        case "login": result = <LoginForm/>; break;
+        case "ReqLogin": result = <ReqLogin/>; break;
+        case "logout": result = <Logout/>; break;
+        case "bws": result = <Browse/>; break;
+        case "ViewContent": result = <ViewContent/>; break;
+        default: console.log(404); break;
     }
 
     return result;
