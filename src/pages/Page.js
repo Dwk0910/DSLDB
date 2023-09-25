@@ -292,9 +292,8 @@ export function CreateContent() {
               <input type={"hidden"} name={"pid"} value={"UploadContent"}/>
               <div className={"CreateContentForm"}><span>제목 입력</span><input name={"name"} type={"text"} placeholder={"제목을 입력하세요"}/></div>
               <div className={"CreateContentEditor"} data-color-mode={"light"}>
-                <MDEditor value={value} onChange={setValue} style={{
-                    width: "100%",
-                    paddingBottom: "35%"
+                <MDEditor value={value} height={500} onChange={setValue} style={{
+                    width: "100%"
                 }}/>
               </div>
               <span style={{
