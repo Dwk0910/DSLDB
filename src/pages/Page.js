@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import { useState } from 'react';
 import { useSearchParams } from "react-router-dom";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -177,6 +178,14 @@ export function Nul() {
     );
 }
 
+function SliceString (targetStr, mch) {
+    if (targetStr.length <= mch) {
+        return (targetStr);
+    }
+
+    return(targetStr.substring(0, mch) + "...");
+}
+
 export function Browse() {
     const [ queryParams ] = useSearchParams();
     const selectedMode = queryParams.get('mode');
@@ -184,13 +193,6 @@ export function Browse() {
 
     let SortedContentList = contentList.toSorted((a, b) => new Date(a.date) - new Date (b.date)).reverse();
 
-    let SliceString = (targetStr, mch) => {
-        if (targetStr.length <= mch) {
-            return (targetStr);
-        }
-
-        return(targetStr.substring(0, mch) + "...");
-    }
 
     let GetIndex = (targetName, targetOwner, TargetDate, targetContent) => {
         for (let i in contentList) {
@@ -246,7 +248,11 @@ export function Browse() {
 
     let plusContent = () => {
         if (typeof localStorage.getItem('id') === 'string') {
-            return (<span className={"contentAdd"}><FontAwesomeIcon icon={faPlusCircle}/> 글 쓰기</span>);
+            return (<span className={"contentAdd"} onClick={
+                () => {
+                    window.location.replace("?pid=CreateContent");
+                }
+            }><FontAwesomeIcon icon={faPlusCircle}/> 글 쓰기</span>);
         }
     };
 
@@ -268,14 +274,76 @@ export function Browse() {
     );
 }
 
+export function CreateContent() {
+    const [value, setValue] = useState("");
+
+    let referrer_bef = document.referrer.split("?")[document.referrer.split("?").length - 1];
+    let referrer = referrer_bef.split("=");
+
+    if (referrer[referrer.length - 1] !== 'bws') {
+        alert("잘못된 접근입니다.");
+        window.history.back();
+        return;
+    }
+
+    return (
+      <div className={"CreateContent"}>
+          <form>
+              <input type={"hidden"} name={"pid"} value={"UploadContent"}/>
+              <div className={"CreateContentForm"}><span>제목 입력</span><input name={"name"} type={"text"} placeholder={"제목을 입력하세요"}/></div>
+              <div className={"CreateContentEditor"} data-color-mode={"light"}>
+                <MDEditor value={value} onChange={setValue} style={{
+                    width: "100%",
+                    paddingBottom: "35%"
+                }}/>
+              </div>
+              <span style={{
+                  marginTop: "1%",
+                  marginBottom: "1%",
+                  color: "red",
+                  fontWeight: "bold",
+                  fontSize: "1.2vw"
+              }}>* 업로드 전에 확인해 주세요! : 업로드 시 반드시 제목이 비어있지 않아야 합니다!! (비어있을 경우 업로드가 취소되고, 모든 내용이 삭제됩니다) *</span>
+              <div className={"CreateContentMenu"} style={{width: "100%", marginTop: "2%", marginBottom: "2%"}}>
+                  <div onClick={() => {
+                      if (value.length > 0) {
+                          Swal.fire({
+                              toast: true,
+                              position: "center",
+                              title: "작성했던 모든 내용이 삭제됩니다.\n계속하시겠습니까?",
+                              icon: "warning",
+                              cancelButtonText: "취소",
+                              confirmButtonText: "나가기",
+                              showCancelButton: true
+                          }).then((e) => {
+                              if (e.isConfirmed) {
+                                  window.location.replace("?pid=bws");
+                              }
+                          })
+                      } else {
+                          window.location.replace("?pid=bws");
+                      }
+                  }}><FontAwesomeIcon icon={faArrowLeft}/> 뒤로가기</div>
+                  <input type={"hidden"} name={"value"} value={value}/>
+                  <input type={"submit"} value={"업로드"}/>
+              </div>
+          </form>
+      </div>
+    );
+}
+
+export function UploadContent() {
+    // TODO: 업로드 시스템 구현
+}
+
 export function ViewContent() {
     const [ queryParams ] = useSearchParams();
     const index = parseInt(queryParams.get('idx')) - 1;
 
     let titleArr = [];
     if (localStorage.getItem('id') === contentList[index].owner) {
-        titleArr.push(<a href={`?pid=EditContent&idx=${index + 1}`}><FontAwesomeIcon icon={faPencil}/></a>);
-        titleArr.push(<a href={`?pid=DeleteContent&idx=${index + 1}`}><FontAwesomeIcon icon={faTrashCan}/></a>);
+        titleArr.push(<a key={1} href={`?pid=EditContent&idx=${index + 1}`}><FontAwesomeIcon icon={faPencil}/></a>);
+        titleArr.push(<a key={2} href={`?pid=DeleteContent&idx=${index + 1}`}><FontAwesomeIcon icon={faTrashCan}/></a>);
     }
 
     return (
@@ -283,7 +351,7 @@ export function ViewContent() {
             <div className={"ViewContentTitle"}>
                 <a style={{marginLeft: "9%"}} href={"?pid=bws"}><FontAwesomeIcon icon={faArrowLeft}/> 돌아가기</a>
                 {titleArr}
-                <span>{contentList[index].name}</span>
+                <span>{SliceString(contentList[index].name, 45)}</span>
                 <div style={{display: "flex", flexDirection: "column"}}>
                     <div><span>작성일 : </span><span>{contentList[index].date}</span></div>
                     <div><span>작성자 : </span><span>{contentList[index].owner}</span></div>

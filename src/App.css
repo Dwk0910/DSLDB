@@ -325,6 +325,75 @@ body {
     box-shadow: 0 0 15px rgb(128, 128, 128);
 }
 
+/* CreateContent Style */
+
+.CreateContent {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.CreateContent form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 80%;
+}
+
+.CreateContentForm {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+.CreateContentForm span {
+    font-size: 1.2vw;
+    font-weight: bold;
+    padding: 1%;
+}
+
+.CreateContent input {
+    padding: 1%;
+    width: 80%;
+}
+
+.CreateContentMenu {
+    display: flex;
+    justify-content: center;
+}
+
+.CreateContentMenu > div, .CreateContent input[type="submit"] {
+    transition: all .3s;
+    border: 0;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.CreateContentMenu > div:hover, .CreateContent input[type="submit"]:hover {
+    box-shadow: 0 0 5px rgb(128, 128, 128);
+}
+.CreateContent input[type="submit"] {
+    width: 30%;
+    margin-left: 1%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    background-color: rgba(95, 146, 160, 0.5);
+}
+
+.CreateContentMenu > div {
+    background-color: rgba(128, 128, 128, 0.4);
+    padding: 1%;
+}
+
+.CreateContentEditor {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    margin-top: 2%;
+    width: 90%;
+}
+
 /* ViewContent Style */
 
 .ViewContent {

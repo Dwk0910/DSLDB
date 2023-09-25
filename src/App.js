@@ -23,6 +23,8 @@ import {
     Logout,
     Nul,
     Browse,
+    CreateContent,
+    UploadContent,
     ViewContent
 } from './pages/Page';
 
@@ -76,6 +78,8 @@ function MainContent() {
         case "ReqLogin": result = <ReqLogin/>; break;
         case "logout": result = <Logout/>; break;
         case "bws": result = <Browse/>; break;
+        case "CreateContent": result = <CreateContent/>; break;
+        case "UploadContent": result = <UploadContent/>; break;
         case "ViewContent": result = <ViewContent/>; break;
         default: console.log(404); break;
     }
